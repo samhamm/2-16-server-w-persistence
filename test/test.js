@@ -1,6 +1,6 @@
 'use strict';
 
-require('../index');
+require('../server');
 var chai = require('chai');
 var chaihttp = require('chai-http');
 
