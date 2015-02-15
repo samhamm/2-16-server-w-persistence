@@ -8,7 +8,7 @@ var http = require('http');
 var router = require('./lib/router');
 
 var routes = {};
-routes['daleks'] = router;
+routes['sam'] = router;
 
 var server = http.createServer(function(req, res) {
   var pathBits = req.url.split("/");
@@ -31,6 +31,6 @@ server.listen(3000, function() {
 });
 
 /* Once server is going, run this in another Terminal tab
-$ superagent localhost:3000/unicorns post {"hello": "world", "foo": "bar"} */
+$ superagent localhost:3000/sam POST {"hello": "world", "foo": "bar"} */
 
 // https://github.com/toastynerd/superagent-cli
