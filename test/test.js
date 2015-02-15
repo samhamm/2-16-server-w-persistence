@@ -9,7 +9,8 @@ chai.use(chaihttp);
 
 var expect = chai.expect;
 
-var file1 = '{ "wife": "Kim", "cat": "Alistair" }';
+var testText1 = '{ "wife": "Kim", "cat": "Alistair" }';
+var testText2 = '{ "wife": "Kim", "cat": "Alistair", "tiger": "Buddy" }';
 
 describe('The server: ', function() {
   beforeEach(function() {
@@ -22,7 +23,7 @@ describe('The server: ', function() {
       .end(function(err, res) {
         expect(err).to.eql(null);
         expect(res).to.have.status(200);
-        expect(res.text).to.eql(file1);
+        expect(res.text).to.eql(testText1);
         done();
       });
   });
@@ -43,14 +44,38 @@ describe('The server: ', function() {
 
   it('should PUT a file', function(done) {
     chai.request('localhost:3000')
-      .put('/sam/1')
+      .put('/sam/2')
       .end(function(err, res) {
         expect(err).to.eql(null);
         expect(res).to.have.status(200);
-        // expect(res.body).to.eql(file1);
         done();
       });
   });
 
+  after(function() {
+    fs.unlink('./data/2.json');
+  });
+
+  it('should PATCH a file', function(done) {
+    chai.request('localhost:3000')
+      .patch('/sam/1')
+      .end(function(err, res) {
+        expect(err).to.eql(null);
+        expect(res).to.have.status(200);
+        // expect(res.body).to.eql(testText2);
+        done();
+      });
+  });
+
+  it('should DELETE a file', function(done) {
+    chai.request('localhost:3000')
+      .delete('/sam/1')
+      .end(function(err, res) {
+        expect(err).to.eql(null);
+        expect(res).to.have.status(200);
+        // expect(res.body).to.eql(testText2);
+        done();
+      });
+  });
 
 });
