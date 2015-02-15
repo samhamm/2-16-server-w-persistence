@@ -1,6 +1,7 @@
 'use strict';
 
 require('../server');
+var fs = require('fs');
 var chai = require('chai');
 var chaihttp = require('chai-http');
 
@@ -8,72 +9,38 @@ chai.use(chaihttp);
 
 var expect = chai.expect;
 
+var file1 = '{ "wife": "Kim", "cat": "Alistair" }';
+
 describe('the server', function() {
+  beforeEach(function() {
+    fs.writeFile('./data/1.json', '{ "wife": "Kim", "cat": "Alistair" }');
+  });
 
-  it('should GET ', function(done) {
+  it('should GET a file', function(done) {
     chai.request('localhost:3000')
-      .get('/someRoute')
+      .get('/sam/1')
       .end(function(err, res) {
         expect(err).to.eql(null);
         expect(res).to.have.status(200);
-        expect(res.text).to.eql('something');
+        expect(res.text).to.eql(file1);
         done();
       });
   });
 
-  it('should POST ', function(done) {
+  it('should POST a file', function(done) {
     chai.request('localhost:3000')
-      .post('/someRoute')
+      .post('/sam/999')
       .end(function(err, res) {
         expect(err).to.eql(null);
         expect(res).to.have.status(200);
-        expect(res.text).to.eql('something');
+        // expect(res.body).to.eql(file1);
         done();
       });
   });
 
-  it('should PUT ', function(done) {
-    chai.request('localhost:3000')
-      .put('/someRoute')
-      .end(function(err, res) {
-        expect(err).to.eql(null);
-        expect(res).to.have.status(200);
-        expect(res.text).to.eql('something');
-        done();
-      });
+  after(function() {
+    fs.unlink('./data/999.json');
   });
 
-  it('should PATCH ', function(done) {
-    chai.request('localhost:3000')
-      .patch('/someRoute')
-      .end(function(err, res) {
-        expect(err).to.eql(null);
-        expect(res).to.have.status(200);
-        expect(res.text).to.eql('something');
-        done();
-      });
-  });
-
-  it('should DELETE ', function(done) {
-    chai.request('localhost:3000')
-      .del('/someRoute')
-      .end(function(err, res) {
-        expect(err).to.eql(null);
-        expect(res).to.have.status(200);
-        expect(res.text).to.eql('something');
-        done();
-      });
-  });
-
-  it('should give a 404 message for any unspecified routes', function(done) {
-    chai.request('localhost:3000')
-      .get('unspecified routes')
-      .end(function(err, res) {
-        expect(err).to.eql(null);
-        expect(res).to.have.status(404);
-        expect(res.text).to.eql('404: Nothing here, you loser.');
-        done();
-      });
-  });
 
 });
