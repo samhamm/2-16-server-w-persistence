@@ -11,7 +11,7 @@ var expect = chai.expect;
 
 var file1 = '{ "wife": "Kim", "cat": "Alistair" }';
 
-describe('the server', function() {
+describe('The server: ', function() {
   beforeEach(function() {
     fs.writeFile('./data/1.json', '{ "wife": "Kim", "cat": "Alistair" }');
   });
@@ -33,13 +33,23 @@ describe('the server', function() {
       .end(function(err, res) {
         expect(err).to.eql(null);
         expect(res).to.have.status(200);
-        // expect(res.body).to.eql(file1);
         done();
       });
   });
 
   after(function() {
     fs.unlink('./data/999.json');
+  });
+
+  it('should PUT a file', function(done) {
+    chai.request('localhost:3000')
+      .put('/sam/1')
+      .end(function(err, res) {
+        expect(err).to.eql(null);
+        expect(res).to.have.status(200);
+        // expect(res.body).to.eql(file1);
+        done();
+      });
   });
 
 
