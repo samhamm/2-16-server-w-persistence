@@ -1,5 +1,7 @@
 // Sam Hamm
-// Assignment info
+// HTTP server with simple persistence
+// Assignment for Code Fellows JavaScript Development Accelerator
+// Due 2/16/15
 // Collaborators: Trish Buckenberger, Gaye Bulut, Rory Sterley
 
 'use strict';
@@ -21,13 +23,13 @@ var server = http.createServer(function(req, res) {
     });
     console.log(pathBits);
     console.log(pathBits[0]);
-    res.write(JSON.stringify({msg: 'page not found'}));
+    res.write(JSON.stringify({msg: '404: Page Not Found'}));
     res.end();
   }
 });
 
 server.listen(3000, function() {
-  console.log('server listening');
+  console.log('The server is listening at localhost:3000...');
 });
 
 /* Once server is going, run this in another Terminal tab
