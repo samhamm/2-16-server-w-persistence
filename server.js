@@ -22,7 +22,7 @@ var server = http.createServer(function(req, res) {
       'Content-Type': 'application/json'
     });
 
-    res.write(JSON.stringify({msg: '404: Page Not Found'}));
+    res.write(JSON.stringify({msg: '404: Not Found'}));
     res.end();
   }
 });

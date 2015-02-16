@@ -1,3 +1,9 @@
+// Sam Hamm
+// HTTP server with simple persistence
+// Assignment for Code Fellows JavaScript Development Accelerator
+// Due 2/16/15
+// Collaborators: Trish Buckenberger, Gaye Bulut, Rory Sterley
+
 'use strict';
 
 require('../server');
