@@ -10,16 +10,16 @@ chai.use(chaihttp);
 var expect = chai.expect;
 
 var testText1 = '{ "wife": "Kim", "cat": "Alistair" }';
-var testText2 = '{ "wife": "Kim", "cat": "Alistair", "tiger": "Buddy" }';
 
 describe('The server: ', function() {
-  beforeEach(function() {
-    fs.writeFile('./data/1.json', '{ "wife": "Kim", "cat": "Alistair" }');
+
+  before(function() {
+    fs.writeFile('./data/test-get.json', testText1);
   });
 
   it('should GET a file', function(done) {
     chai.request('localhost:3000')
-      .get('/sam/1')
+      .get('/sam/test-get')
       .end(function(err, res) {
         expect(err).to.eql(null);
         expect(res).to.have.status(200);
@@ -28,9 +28,13 @@ describe('The server: ', function() {
       });
   });
 
+  after(function() {
+    fs.unlink('./data/test-get.json');
+  });
+
   it('should POST a file', function(done) {
     chai.request('localhost:3000')
-      .post('/sam/999')
+      .post('/sam/test-post')
       .end(function(err, res) {
         expect(err).to.eql(null);
         expect(res).to.have.status(200);
@@ -39,12 +43,12 @@ describe('The server: ', function() {
   });
 
   after(function() {
-    fs.unlink('./data/999.json');
+    fs.unlink('./data/test-post.json');
   });
 
   it('should PUT a file', function(done) {
     chai.request('localhost:3000')
-      .put('/sam/2')
+      .put('/sam/test-put')
       .end(function(err, res) {
         expect(err).to.eql(null);
         expect(res).to.have.status(200);
@@ -53,29 +57,40 @@ describe('The server: ', function() {
   });
 
   after(function() {
-    fs.unlink('./data/2.json');
+    fs.unlink('./data/test-put.json');
+  });
+
+  before(function() {
+    fs.writeFile('./data/test-patch.json', testText1);
   });
 
   it('should PATCH a file', function(done) {
     chai.request('localhost:3000')
-      .patch('/sam/1')
+      .patch('/sam/test-patch')
       .end(function(err, res) {
         expect(err).to.eql(null);
         expect(res).to.have.status(200);
-        // expect(res.body).to.eql(testText2);
         done();
       });
   });
 
+  after(function() {
+    fs.unlink('./data/test-patch.json');
+  });
+
+  before(function() {
+    fs.writeFile('./data/test-delete.json', testText1);
+  });
+
   it('should DELETE a file', function(done) {
     chai.request('localhost:3000')
-      .delete('/sam/1')
+      .del('/sam/test-delete')
       .end(function(err, res) {
         expect(err).to.eql(null);
         expect(res).to.have.status(200);
-        // expect(res.body).to.eql(testText2);
         done();
       });
   });
 
 });
+
