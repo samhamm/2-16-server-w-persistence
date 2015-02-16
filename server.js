@@ -21,18 +21,12 @@ var server = http.createServer(function(req, res) {
     res.writeHead(404, {
       'Content-Type': 'application/json'
     });
-    console.log(pathBits);
-    console.log(pathBits[0]);
+
     res.write(JSON.stringify({msg: '404: Page Not Found'}));
     res.end();
   }
 });
 
 server.listen(3000, function() {
-  console.log('The server is listening at localhost:3000...');
+  console.log('The server is listening at localhost:3000...' + '\n');
 });
-
-/* Once server is going, run this in another Terminal tab
-$ superagent localhost:3000/sam POST {"hello": "world", "foo": "bar"} */
-
-// https://github.com/toastynerd/superagent-cli
