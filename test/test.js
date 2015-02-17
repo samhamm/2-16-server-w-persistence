@@ -34,6 +34,15 @@ describe('The server: ', function() {
       });
   });
 
+  it('should fail to GET a file', function(done) {
+    chai.request('localhost:3000')
+      .get('/sam/bogus/path')
+      .end(function(err, res) {
+        expect(res).to.have.status(404);
+        done();
+      });
+  });
+
   after(function() {
     fs.unlink('./data/test-get.json');
   });
